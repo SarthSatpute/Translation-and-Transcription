@@ -52,7 +52,7 @@ The **Blog Dashboard** is an advanced platform designed to enable seamless trans
   - Review and edit transcriptions and translations.
   - Manage published blogs with basic **CRUD operations** (Create, Read, Update, Delete).
 - **Translation Accuracy Metrics**:
-  - Displays BLEU and ROUGE scores for quality assessment.
+  - Displays BLEU scores for quality assessment.
 - **Blog Analytics**:
   - Tracks engagement metrics such as views, unique visitors, and language-based readership.
 
