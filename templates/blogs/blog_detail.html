@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Detail</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+        * {
+            scroll-behavior: smooth;
+            font-family: 'Nunito Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(30, 30, 30, 0.85);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            background: linear-gradient(rgb(245, 230, 29), rgb(185, 3, 3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #f5f5f5;
+        }
+        select, button {
+            padding: 8px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: rgb(243, 208, 11);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: rgb(91, 10, 131);
+        }
+        .blog-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .blog-content {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        .translation-block {
+            margin-top: 20px;
+            display: none;
+        }
+        .error {
+            color: #ff6f61;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .language-selector {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Language Selection -->
+        <div class="language-selector">
+            <select id="languageSelect" onchange="translateContent(this.value)">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="bn">Bengali</option>
+                <option value="te">Telugu</option>
+                <option value="ta">Tamil</option>
+                <option value="mr">Marathi</option>
+                <option value="gu">Gujarati</option>
+                <option value="kn">Kannada</option>
+                <option value="ml">Malayalam</option>
+                <option value="pa">Punjabi</option>
+                <option value="or">Odia</option>
+            </select>
+            <button onclick="translateAll()">Translate to All Languages</button>
+        </div>
+
+        <!-- Original Content -->
+        <div id="originalContent">
+            <h1 class="blog-title">{{ blog.title }}</h1>
+            <div class="blog-content">{{ blog.content }}</div>
+        </div>
+
+        <!-- Translated Content -->
+        <div id="translatedContent">
+            <!-- Translation blocks will be added here dynamically -->
+        </div>
+    </div>
+
+    <script>
+        function translateContent(langCode) {
+            if (langCode === 'en') {
+                document.getElementById('originalContent').style.display = 'block';
+                document.getElementById('translatedContent').style.display = 'none';
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('translatedContent').innerHTML = 'Translating...';
+            document.getElementById('originalContent').style.display = 'none';
+            document.getElementById('translatedContent').style.display = 'block';
+
+            // Get the blog ID from the URL or set it as a variable in your template
+            const blogId = '{{ blog.id }}'; // This will be replaced by Django
+
+            // Make the translation request
+            fetch(`/blogs/${blogId}/translate/?lang=${langCode}`)
+                .then(response => response.json())
+                .then(data => {
+                    const translation = data.translation;
+                    document.getElementById('translatedContent').innerHTML = `
+                        <div class="translation-block">
+                            <h1 class="blog-title">${translation.title}</h1>
+                            <div class="blog-content">${translation.content}</div>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('translatedContent').innerHTML = 
+                        'Error occurred during translation. Please try again.';
+                    console.error('Translation error:', error);
+                });
+        }
+
+        function translateAll() {
+            // Reload the page with the translate_all parameter
+            window.location.href = `${window.location.pathname}?translate_all=true`;
+        }
+    </script>
+</body>
+</html>
