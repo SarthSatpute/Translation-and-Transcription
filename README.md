@@ -81,11 +81,11 @@ The **Blog Dashboard** is an advanced platform designed to enable seamless trans
 
 ## Technologies Used
 
-- **AI Models**: Google Speech-to-Text, AWS Transcribe, AWS Translate, Google Cloud Translation, OpenAI.
-- **Frontend**: React.js (or equivalent modern UI framework).
-- **Backend**: Node.js, Python (Flask/Django).
-- **Database**: MongoDB, PostgreSQL (for CRUD operations).
-- **Deployment**: Server-Side Rendering (SSR) with Next.js or equivalent framework.
+- **AI Models**: Google Speech-to-Text, Google Cloud Translation.
+- **Frontend**: Django
+- **Backend**: Python (Django).
+- **Database**: Datastax
+- **Deployment**: Server-Side Rendering (SSR) with Django
 - **SEO Tools**: Metadata optimization, dynamic routing, and language-specific indexing.
 
 ---
