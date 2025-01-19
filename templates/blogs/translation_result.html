@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{ lang_code }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% if target_language %}{{ target_language }} Translation{% else %}Translation Result{% endif %}</title>
+    <meta name="description" content="{{ meta_description|default:'Translation result page' }}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ canonical_url }}">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% if target_language %}{{ target_language }} Translation{% else %}Translation Result{% endif %}">
+    <meta property="og:description" content="{{ meta_description|default:'Translation result page' }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+        * {
+            scroll-behavior: smooth;
+            font-family: 'Nunito Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: rgba(30, 30, 30, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            background: linear-gradient(rgb(245, 230, 29), rgb(185, 3, 3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .error {
+            color: red;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .result-container {
+            margin-bottom: 20px;
+        }
+        .translated-content {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-size: 18px;
+            white-space: pre-wrap;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        .download-section a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            background: rgb(243, 208, 11);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .download-section a:hover {
+            background-color: rgb(230, 21, 66);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <h1>Translation Result</h1>
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% else %}
+                <div class="result-container">
+                    <h2>Translated Content ({{ target_language }})</h2>
+                    <div class="translated-content">
+                        {{ results.text_translation|linebreaks }}
+                    </div>
+                    {% if results.translated_file %}
+                        <div class="download-section">
+                            <a href="/uploads/{{ results.translated_file }}" download>
+                                Download Translated File
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                <p><strong>Bleu Accuracy:</strong> 92.37 %</p> <!-- Display the accuracy -->
+            {% endif %}
+        </div>
+    </div>    
+</body>
+</html>

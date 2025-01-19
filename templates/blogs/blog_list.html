@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog List</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'blogging/style.css' %}">
+
+</head>
+
+<body>
+    <h1>Blogs</h1>
+    <ul>
+        {% for blog in blogs %}
+            <li>
+                <a href="{% url 'blog_detail' blog.id 'en' %}">{{ blog.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% comment %} <a href="{% url 'upload_page' %}">Upload Files</a> {% endcomment %}
+
+</body>
+</html>

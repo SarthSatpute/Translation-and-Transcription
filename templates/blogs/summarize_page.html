@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summarize and Transcribe</title>
+</head>
+<body>
+    <h1>Summarize and Transcribe</h1>
+
+    <form id="file-form" action="{% url 'summarize_page' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Upload File</h3>
+        <input type="hidden" name="action_type" value="file">
+        <input type="file" name="file">
+        <button type="submit">Summarize File</button>
+    </form>
+
+    <form id="text-form" action="{% url 'summarize_page' %}" method="post">
+        {% csrf_token %}
+        <h3>Input Text</h3>
+        <input type="hidden" name="action_type" value="text">
+        <textarea name="text" rows="5" cols="40" placeholder="Enter text here"></textarea>
+        <button type="submit">Summarize Text</button>
+    </form>
+
+    <form id="video-form" action="{% url 'summarize_page' %}" method="post">
+        {% csrf_token %}
+        <h3>Input YouTube Video URL</h3>
+        <input type="hidden" name="action_type" value="video">
+        <input type="url" name="video_url" placeholder="Enter video URL">
+        <button type="submit">Summarize Video</button>
+    </form>
+</body>
+</html>
